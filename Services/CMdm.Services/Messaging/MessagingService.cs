@@ -15,6 +15,7 @@ using RazorEngine.Templating;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Security.Cryptography;
+using System.Data.Entity;
 
 namespace CMdm.Services.Messaging
 {
@@ -23,7 +24,7 @@ namespace CMdm.Services.Messaging
         private AppDbContext db;
         private TemplateService _templateService;
         static readonly string TemplateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Views", "MessagingTemplates");
-        static readonly string BackTemplateFolderPath = Path.Combine("C:\\Users\\salam\\Documents\\Visual Studio 2017\\Projects\\CMDM\\Presentation\\CMdm.UI.Web\\", "Views", "MessagingTemplates");
+        static readonly string BackTemplateFolderPath = Path.Combine("E:\\bluechip_mdm\\CMDM-master\\Presentation\\CMdm.UI.Web\\", "Views", "MessagingTemplates");
         static bool mailSent = false;
         private SymmetricAlgorithm mobjCryptoService;
 
@@ -103,28 +104,32 @@ namespace CMdm.Services.Messaging
             string branchCode = GetBranchIdbyProdileId(userProfile);
             string branchName = GetBranchName(branchCode);
 
-            CMDM_ACTIVITY_LOG activity_log = new CMDM_ACTIVITY_LOG();
-
-            try
+            using (var db = new AppDbContext())
             {
-                activity_log = new CMDM_ACTIVITY_LOG
+                CMDM_ACTIVITY_LOG activity_log;
+
+                try
                 {
-                    USER_ID = userProfile,
-                    USER_NAME = username,
-                    FULLNAME = fullname,
-                    BRANCH_CODE = branchCode,
-                    BRANCH_NAME = branchName,
-                    ACTIVITY_DESC = desc,
-                    ACTIVITY_DATE = activityDate
-                };
+                    activity_log = new CMDM_ACTIVITY_LOG
+                    {
+                        USER_ID = userProfile,
+                        USER_NAME = username,
+                        FULLNAME = fullname,
+                        BRANCH_CODE = branchCode,
+                        BRANCH_NAME = branchName,
+                        ACTIVITY_DESC = desc,
+                        ACTIVITY_DATE = activityDate
+                    };
 
-                db.CMDM_ACTIVITY_LOG.Add(activity_log);
-                db.SaveChanges();
-            }catch(Exception e)
-            {
-                Console.WriteLine(e.ToString());
+                    db.CMDM_ACTIVITY_LOG.Add(activity_log);
+                    db.Entry(activity_log).State = EntityState.Added;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
-            
         }
 
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)

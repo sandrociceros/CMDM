@@ -104,7 +104,7 @@ namespace CMdm.Data.DAC
                 if (!string.IsNullOrWhiteSpace(lname))
                     query = query.Where(v => v.CUST_LAST_NAME.ToUpper().Contains(lname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(reason) && reason != "0")
-                    query = query.Where(v => v.REASON.ToUpper().Contains(reason.ToUpper()));
+                    query = query.Where(v => v.REASON.ToUpper().Equals(reason.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.PRIMARY_SOL_ID.Contains(branchCode));
                 // Append filters.

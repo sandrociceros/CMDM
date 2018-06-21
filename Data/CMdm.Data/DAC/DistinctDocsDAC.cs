@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace CMdm.Data.DAC
 {
-    public class ActivityLogDAC
+    public class DistinctDocsDAC
     {
         #region Ctor
         //private AppDbContext db;// = new AppDbContext();
         #endregion
-        #region ActivityLog
+        #region DistinctDoc
         /// <summary>
         /// Inserts a new row in the MdmDQQue table.
         /// </summary>
         /// <param name="mdmque">A MdmDQQue object.</param>
         /// <returns>An updated MdmDQQue object.</returns>
-        public ActivityLog InsertActivityLog(ActivityLog mdmdque)
+        public DistinctDocs InsertDistinctDocs(DistinctDocs mdmdque)
         {
             using (var db = new AppDbContext())
             {
-                db.Set<ActivityLog>().Add(mdmdque);
+                db.Set<DistinctDocs>().Add(mdmdque);
                 db.SaveChanges();
 
                 return mdmdque;
@@ -35,11 +35,11 @@ namespace CMdm.Data.DAC
         /// Updates an existing row in the mdmdque table.
         /// </summary>
         /// <param name="mdmdque">A mdmdque entity object.</param>
-        public void UpdateActivityLog(ActivityLog mdmdque)
+        public void UpdateDistinctDocs(DistinctDocs mdmdque)
         {
             using (var db = new AppDbContext())
             {
-                var entry = db.Entry<ActivityLog>(mdmdque);
+                var entry = db.Entry<DistinctDocs>(mdmdque);
 
                 // Re-attach the entity.
                 entry.State = EntityState.Modified;
@@ -47,19 +47,19 @@ namespace CMdm.Data.DAC
                 db.SaveChanges();
             }
         }
-        public virtual IList<ActivityLog> SelectByIds(int[] recordIds)
+        public virtual IList<DistinctDocs> SelectByIds(int[] recordIds)
         {
             if (recordIds == null || recordIds.Length == 0)
-                return new List<ActivityLog>();
+                return new List<DistinctDocs>();
 
             using (var db = new AppDbContext())
             {
-                var query = from c in db.ActivityLog
+                var query = from c in db.DistinctDocs
                             where recordIds.Contains(c.ID)
                             select c;
                 var goldenrecords = query.ToList();
                 //sort by passed identifiers
-                var sortedCustomers = new List<ActivityLog>();
+                var sortedCustomers = new List<DistinctDocs>();
                 foreach (int id in recordIds)
                 {
                     var goldenrecord = goldenrecords.Find(x => x.ID == id);
@@ -70,11 +70,11 @@ namespace CMdm.Data.DAC
             }
 
         }
-        public ActivityLog SelectActivityLogById(int recordId)
+        public DistinctDocs SelectDistinctDocsById(int recordId)
         {
             using (var db = new AppDbContext())
             {
-                return db.Set<ActivityLog>().Find(recordId);
+                return db.Set<DistinctDocs>().Find(recordId);
             }
         }
 
@@ -86,30 +86,25 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<ActivityLog> SelectActivityLog(string username, string fullname, string branchCode, DateTime? CreatedOnFrom, DateTime? CreatedOnTo,
-            int startRowIndex, int maximumRows, string sortExpression)
+        public List<DistinctDocs> SelectDistinctDocs(string name, string custid, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
                 // Store the query.
                 //IQueryable<MdmDQQue> query = db.Set<MdmDQQue>();
-                var query = db.ActivityLog.Select(q => q);
+                var query = db.DistinctDocs.Select(q => q);
 
-                if (!string.IsNullOrWhiteSpace(username))
-                    query = query.Where(v => v.USER_NAME.ToUpper().Contains(username.ToUpper()));
-                if (!string.IsNullOrEmpty(fullname))
-                    query = query.Where(v => v.FULLNAME.ToUpper().Contains(fullname.ToUpper()));
+                if (!string.IsNullOrWhiteSpace(name))
+                    query = query.Where(v => v.ACCT_NAME.ToUpper().Contains(name.ToUpper()));
+                if (!string.IsNullOrWhiteSpace(custid))
+                    query = query.Where(v => v.CIF_ID.Contains(custid));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
-                    query = query.Where(v => v.BRANCH_CODE.Contains(branchCode));
-                if (CreatedOnFrom != null)
-                    query = query.Where(v => v.ACTIVITY_DATE >= CreatedOnFrom);
-                if (CreatedOnTo != null)
-                    query = query.Where(v => v.ACTIVITY_DATE <= CreatedOnTo);
+                    query = query.Where(v => v.SOL_ID.Contains(branchCode));
                 // Append filters.
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderByDescending(a => a.ACTIVITY_DATE);//    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderByDescending(a => a.DUE_DATE);//    //OrderBy(a => a.CREATED_DATE)  //
                                                                  //  .Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
@@ -122,12 +117,12 @@ namespace CMdm.Data.DAC
         /// </summary>
         /// <param name="name">A employee value.</param>
         /// <returns>The record count.</returns>		
-        public int CountActivityLog(string name)
+        public int CountDistinctDocs(string name)
         {
             using (var db = new AppDbContext())
             {
                 // Store the query.
-                IQueryable<ActivityLog> query = db.Set<ActivityLog>();
+                IQueryable<DistinctDocs> query = db.Set<DistinctDocs>();
 
                 // Append filters.
                 query = AppendFilters(query, name);
@@ -143,12 +138,12 @@ namespace CMdm.Data.DAC
         /// <param name="query">The query object.</param>
         /// <param name="name">The name to filter by.</param>
         /// <returns>A query object.</returns>
-        private static IQueryable<ActivityLog> AppendFilters(IQueryable<ActivityLog> query,
+        private static IQueryable<DistinctDocs> AppendFilters(IQueryable<DistinctDocs> query,
             string name)
         {
             // Filter name.
             if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(v => v.USER_NAME.Contains(name));
+                query = query.Where(v => v.ACCT_NAME.Contains(name));
             //query = query.Where(l => l.Employee == employee);
 
             // Filter category.
@@ -160,7 +155,7 @@ namespace CMdm.Data.DAC
             //    query = query.Where(l => l.Status == status);
             return query;
         }
-        #endregion ActivityLog
+        #endregion DistinctDoc
         //
     }
 }

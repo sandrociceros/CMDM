@@ -121,7 +121,7 @@ namespace CMdm.Services.DqQue
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<MdmDQQue> GetAllQueItems(string name = "",
+        public virtual IPagedList<MdmDQQue> GetAllQueItems(string name = "", int? mdmId = 0,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<MdmDQQue> result = default(List<MdmDQQue>);
@@ -129,7 +129,7 @@ namespace CMdm.Services.DqQue
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "Created_Date DESC";
            // Step 1 - Calling Select on the DAC.
-            result = _dqqueDAC.Select(name, pageIndex, pageSize, sortExpression);
+            result = _dqqueDAC.Select(name, mdmId, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

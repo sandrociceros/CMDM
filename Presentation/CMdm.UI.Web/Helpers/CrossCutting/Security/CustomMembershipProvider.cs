@@ -19,6 +19,8 @@ using CMdm.Services.Authentication;
 using Elmah;
 using CMdm.Services;
 using TwoFactorAuthenticationSvc;
+using CMdm.Services.Messaging;
+using System.IO;
 
 namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 {
@@ -28,9 +30,10 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 
         private int _cacheTimeoutInMinutes = 30;
         static PasswordManager pwdManager = new PasswordManager();
+        private IMessagingService _messagingService = new MessagingService();
         public AppDbContext db = new AppDbContext();
 
-        private const string successStat = "STAT_SUCCESS";
+        private const string successStat = "0";
         private static string logs = "";
         //private Customer custObj;
         //public static string connString = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
@@ -83,6 +86,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     #region TwoFactor
 
                     string domainName1 = db.Settings.Where(a => a.SETTING_NAME == "SMTP_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();
+                   
 
 
                     //domain: “fcmb.com” All FCMB UserIDs in FCMB AD is imported into this container in VASCO IAS
@@ -90,15 +94,42 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     //pin: leave blank
                     //dpResponse: the “AD Password +OTP” (One Time Password) displayed when the hardware token(digipass) is pressed
                     //password: leave blank
-                    //reqHostCode: “false”
+                    //reqHostCode: “false” sjahdgsajs532522
                     bool authenticated1 = false;
                     try
                     {
                         ServiceSoapClient client = new ServiceSoapClient();
                         string hostResponse = client.AuthoriseUser(domainName1, username, "", password, "", false);
-                        if (hostResponse == successStat)
+                        if (hostResponse.Substring(0,1) == successStat)
                         {
-                            authenticated1 = true;
+                            //Then check local user
+                            using (var context = new AppDbContext())
+                            {
+                                var localuser = (from u in context.CM_USER_PROFILE
+                                                 where u.USER_ID.ToLower() == username.ToLower()
+                                                 where u.ISLOCKED == 0
+                                                 //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
+
+                                                 //&& !u.Deleted
+                                                 select u).FirstOrDefault();
+
+                                if (localuser == null)
+                                {
+                                    HttpContext.Current.Session["Response"] = "User not profiled";
+                                    authenticated1 = false;
+                                }
+                                else
+                                {
+                                    _messagingService.SaveUserActivity(localuser.PROFILE_ID, "Logged into CMDM", DateTime.Now);
+                                    authenticated1 = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            ErrorSignal.FromCurrentContext().Raise(new NotImplementedException(hostResponse));
+                            HttpContext.Current.Session["Response"] = hostResponse;
+                            _messagingService.SaveUserActivity(1, hostResponse + " by " + username, DateTime.Now);
                         }
                         //if (true == adAuth.IsAuthenticated(loginDomain, username, password))
                         //{
@@ -109,6 +140,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                     }
                     catch (Exception ex)
                     {
+                        HttpContext.Current.Session["Response"] = ex.Message;
                         ErrorSignal.FromCurrentContext().Raise(ex);
                     }
 
@@ -134,13 +166,36 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                             //var user = (from u in db.CM_USER_PROFILE
                             //            where u.USER_ID.ToLower() == username.ToLower()
                             //            select u).FirstOrDefault();
-                            authenticated = true;
+
+                            //Then check local user
+                            using (var context = new AppDbContext())
+                            {
+                                var localuser = (from u in context.CM_USER_PROFILE
+                                                 where u.USER_ID.ToLower() == username.ToLower()
+                                                 where u.ISLOCKED == 0
+                                                 //where String.Compare(u.USER_ID, username, StringComparison.OrdinalIgnoreCase) == 0
+
+                                                 //&& !u.Deleted
+                                                 select u).FirstOrDefault();
+
+                                if (localuser == null)
+                                {
+                                    HttpContext.Current.Session["Response"] = "User not profiled";
+                                    authenticated = false;
+                                }
+                                else
+                                {
+                                    _messagingService.SaveUserActivity(localuser.PROFILE_ID, "Logged into CMDM", DateTime.Now);
+                                    authenticated = true;
+                                }                                
+                            }
 
                         }
 
                     }
                     catch (Exception ex)
                     {
+                        HttpContext.Current.Session["Response"] = ex.Message;
                         ErrorSignal.FromCurrentContext().Raise(ex);
                     }
 

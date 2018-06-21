@@ -11,6 +11,7 @@ namespace CMdm.Services.CustomModule.Fcmb
 {
     public interface ICustomService
     {
+        #region OutstandingDocs
         /// <summary>
         /// Gets a queitem by item identifiers
         /// </summary>
@@ -31,7 +32,35 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string custid = "", string acctid= "", string branchCode = "",
+        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string custid = "", string acctid = "", string branchCode = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
-          }
+    
+    #endregion OutstandingDocs
+
+        #region DistinctDocs
+        /// <summary>
+        /// Gets a queitem by item identifiers
+        /// </summary>
+        /// <param name="recordId">recordId identifier</param>
+        /// <returns>Vendor</returns>
+        IList<DistinctDocs> GetDistinctDocsbyIds(int[] recordIds);
+        /// <summary>
+        /// Gets a Queitem by item reference identifier
+        /// </summary>
+        /// <param name="recordId">que identifier</param>
+        /// <returns>Vendor</returns>
+        DistinctDocs GetDistDocItembyId(int recordId);
+        /// <summary>
+        /// Gets all items
+        /// </summary>
+        /// <param name="name"> name</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="sortExpression">A value indicating whether to show hidden records</param>
+        /// <returns>Vendors</returns>
+        IPagedList<DistinctDocs> GetAllDistinctDocs(string name = "", string custid = "", string branchCode = "",
+            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
+
+        #endregion DistinctDocs
+    }
 }

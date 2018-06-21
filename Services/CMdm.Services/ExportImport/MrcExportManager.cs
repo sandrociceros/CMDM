@@ -38,7 +38,7 @@ namespace CMdm.Services.ExportImport
             {
                 new PropertyByName<DistinctRefCode>("Account Officer", p => p.ACCOUNTOFFICER_NAME),
 
-                new PropertyByName<DistinctRefCode>("Ref Code", p => p.REF_CODE),
+                new PropertyByName<DistinctRefCode>("AO Code", p => p.REF_CODE),
             };
 
             return ExportToXlsx(properties, documents);

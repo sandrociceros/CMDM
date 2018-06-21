@@ -24,5 +24,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
         public string EMAIL { get; set; }
         public string BRANCH_CODE { get; set; }
         public string BRANCH_NAME { get; set; }
+        public string ACCOUNT_NO { get; set; }
+        public string SCHM_CODE { get; set; }
     }
 }

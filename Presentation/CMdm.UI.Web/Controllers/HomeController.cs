@@ -289,7 +289,7 @@ namespace CMdm.UI.Web.Controllers
              from p in dashdata.BrnKpis
              where p.BRANCH_CODE == brnCode
              select (decimal)p.BRN_DQI
-            ).SingleOrDefault();
+            ).FirstOrDefault();
 
                        
             var v_util = new[]

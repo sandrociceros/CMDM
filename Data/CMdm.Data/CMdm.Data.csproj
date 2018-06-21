@@ -74,6 +74,7 @@
     <Compile Include="DAC\ActivityLogDAC.cs" />
     <Compile Include="DAC\CustomActionsDAC.cs" />
     <Compile Include="DAC\CustSegmentDAC.cs" />
+    <Compile Include="DAC\DistinctDocsDAC.cs" />
     <Compile Include="DAC\DistinctRefCodeDAC.cs" />
     <Compile Include="DAC\DqiSummaryDAC.cs" />
     <Compile Include="DAC\EmailPhoneDAC.cs" />

@@ -220,7 +220,7 @@
                             }
                         }
                     </div>
-                    <a href="@Url.Action("Index", "DQQue")" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="@Url.Action("List", "DQQue", new { id = "1"})" class="btn btn-warning pull-right">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -423,7 +423,7 @@
             levelColors: ["#f0ad4e"],
             title: "Tier 2"
         });
-
+        
         var g2 = new JustGage({
             id: "gauge3",
             value: @allKpi[2].BRN_DQI,

@@ -38,6 +38,8 @@ namespace CMdm.Services.ExportImport
             {
 
                 new PropertyByName<PhoneValidation>("Customer ID", p => p.CUSTOMER_NO),
+                new PropertyByName<PhoneValidation>("Account Number", p => p.ACCOUNTNO),
+                new PropertyByName<PhoneValidation>("Scheme Code", p => p.SCHEME_CODE),
 
                 new PropertyByName<PhoneValidation>("Branch Code", p => p.BRANCH_CODE),
                 new PropertyByName<PhoneValidation>("Branch Name", p => p.BRANCH_NAME),

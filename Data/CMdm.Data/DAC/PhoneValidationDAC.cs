@@ -86,7 +86,8 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<PhoneValidation> SelectPhoneValidation(string custId, string fname, string mname, string lname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<PhoneValidation> SelectPhoneValidation(string custId, string accno, string fname, string mname, string lname, string branchCode,
+            int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,7 +97,8 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(custId))
                     query = query.Where(v => v.CUSTOMER_NO.Contains(custId));
-
+                if (!string.IsNullOrWhiteSpace(accno))
+                    query = query.Where(v => v.ACCOUNTNO.Contains(accno));
                 if (!string.IsNullOrWhiteSpace(fname))
                     query = query.Where(v => v.CUST_FIRST_NAME.ToUpper().Contains(fname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(mname))

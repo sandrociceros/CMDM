@@ -38,7 +38,8 @@ namespace CMdm.Services.ExportImport
             {
 
                 new PropertyByName<EmailPhone>("Customer ID", p => p.ORGKEY),
-
+                new PropertyByName<EmailPhone>("Account NO", p => p.ACCOUNT_NO),
+                new PropertyByName<EmailPhone>("Scheme Code", p => p.SCHM_CODE),
                 new PropertyByName<EmailPhone>("Duplicate ID", p => p.DUPLICATE_ID),
                 new PropertyByName<EmailPhone>("First Name", p => p.CUST_FIRST_NAME),
                 new PropertyByName<EmailPhone>("Middle Name", p => p.CUST_MIDDLE_NAME),

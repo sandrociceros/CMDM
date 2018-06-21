@@ -115,7 +115,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<MdmDQQue> Select(string name, int startRowIndex, int maximumRows, string sortExpression)
+        public List<MdmDQQue> Select(string name, int? mdmId, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -125,6 +125,12 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(name))
                     query = query.Where(v => v.DQ_PROCESS_NAME.ToUpper().Contains(name.ToUpper()));
+
+                if (mdmId.HasValue && mdmId > 0)
+                {
+                    int rec = (int)mdmId.Value;
+                    query = query.Where(v => v.MDM_ID == rec);
+                }
                 // Append filters.
                 //query = AppendFilters(query, name);
 
@@ -230,7 +236,7 @@ namespace CMdm.Data.DAC
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.RUN_DATE); //    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderBy(a => a.RUN_DATE).Take(10); //    //OrderBy(a => a.CREATED_DATE)  //
                         //.Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.

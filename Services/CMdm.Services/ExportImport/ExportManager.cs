@@ -34,7 +34,28 @@ namespace CMdm.Services.ExportImport
         /// Export documents list to XLSX
         /// </summary>
         /// <param name="documents">documents</param>
-        public virtual byte[] ExportDocumentsToXlsx(IList<OutStandingDoc> documents)
+        /// 
+        public virtual byte[] ExportDocumentsToXlsx(IList<DistinctDocs> documents)
+        {
+            //property array
+            var properties = new[]
+            {
+                new PropertyByName<DistinctDocs>("Account Name", p => p.ACCT_NAME),
+
+                new PropertyByName<DistinctDocs>("Branch Code", p => p.SOL_ID),
+                new PropertyByName<DistinctDocs>("Branch Name", p => p.BRANCH_NAME),
+
+                new PropertyByName<DistinctDocs>("Due Date", p => p.DUE_DATE.ToString()),
+                new PropertyByName<DistinctDocs>("Reason Code", p => p.FREZ_REASON_CODE),
+                new PropertyByName<DistinctDocs>("CustomerId", p => p.CIF_ID),
+                new PropertyByName<DistinctDocs>("Account Officer Code", p => p.ACCTOFFICER_CODE),
+                new PropertyByName<DistinctDocs>("Account Officer Name", p => p.ACCTOFFICER_NAME),
+            };
+
+            return ExportToXlsx(properties, documents);
+        }
+
+        public virtual byte[] ExportOutDocumentsToXlsx(IList<OutStandingDoc> documents)
         {
             //property array
             var properties = new[]
@@ -46,13 +67,13 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("Branch Code", p => p.SOL_ID),
                 new PropertyByName<OutStandingDoc>("Branch Name", p => p.BRANCH_NAME),
                 new PropertyByName<OutStandingDoc>("Product Name", p => p.SCHM_DESC),
-                new PropertyByName<OutStandingDoc>("Schm Type", p => p.SCHM_TYPE),
-                new PropertyByName<OutStandingDoc>("OutStanding Document", p => p.REF_DESC),                
-                new PropertyByName<OutStandingDoc>("ProdCode", p => p.SCHM_CODE),             
+                new PropertyByName<OutStandingDoc>("Type", p => p.SCHM_TYPE),
+                new PropertyByName<OutStandingDoc>("Product Description", p => p.REF_DESC),                
+                new PropertyByName<OutStandingDoc>("Scheme Code", p => p.SCHM_CODE),             
                 
                 new PropertyByName<OutStandingDoc>("Due Date", p => p.DUE_DATE.ToString()),
-                new PropertyByName<OutStandingDoc>("Reason Code", p => p.FREZ_REASON_CODE),
-                new PropertyByName<OutStandingDoc>("CustomerId", p => p.CIF_ID),
+                new PropertyByName<OutStandingDoc>("Reason", p => p.FREZ_REASON_CODE),
+                new PropertyByName<OutStandingDoc>("Customer Id", p => p.CIF_ID),
                 new PropertyByName<OutStandingDoc>("Account Officer Code", p => p.ACCTOFFICER_CODE),
                 new PropertyByName<OutStandingDoc>("Account Officer Name", p => p.ACCTOFFICER_NAME),
             };

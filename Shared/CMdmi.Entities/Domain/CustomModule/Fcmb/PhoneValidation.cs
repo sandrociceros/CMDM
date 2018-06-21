@@ -21,5 +21,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
         public string PHONE_NO { get; set; }
         public string TYPE { get; set; }
         public string BRANCH_NAME { get; set; }
+        public string SCHEME_CODE { get; set; }
+        public string ACCOUNTNO { get; set; }
     }
 }

@@ -86,7 +86,8 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<EmailPhone> SelectEmailPhone(string custid, string phone, string email, string firstname, string midname, string lastname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<EmailPhone> SelectEmailPhone(string custid, string accno, string phone, string email, string firstname, string midname, string lastname, string branchCode, 
+            int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,6 +97,9 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(custid))
                     query = query.Where(v => v.ORGKEY.Contains(custid));
+
+                if (!string.IsNullOrWhiteSpace(accno))
+                    query = query.Where(v => v.ACCOUNT_NO.Contains(accno));
 
                 if (!string.IsNullOrWhiteSpace(phone))
                     query = query.Where(v => v.PREFERREDPHONE.Contains(phone));

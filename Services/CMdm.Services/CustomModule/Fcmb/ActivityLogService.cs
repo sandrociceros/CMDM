@@ -115,15 +115,15 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<ActivityLog> GetAllActivityLogs(string username = "", string fullname = "", string branchCode = "",
-            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
+        public virtual IPagedList<ActivityLog> GetAllActivityLogs(string username = "", string fullname = "", string branchCode = "", DateTime? CreatedOnFrom = null, 
+            DateTime? CreatedOnTo = null, int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<ActivityLog> result = default(List<ActivityLog>);
 
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "ACTIVITY_DATE DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _alDAC.SelectActivityLog(username, fullname, branchCode, pageIndex, pageSize, sortExpression);
+            result = _alDAC.SelectActivityLog(username, fullname, branchCode, CreatedOnFrom, CreatedOnTo, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

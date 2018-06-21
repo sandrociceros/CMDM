@@ -46,6 +46,7 @@ namespace CMdm.Entities.Domain.Dqi
         public string BRANCH_CODE { get; set; }
         public decimal PCT_COMPLETION { get; set; }
         public int CATALOG_ID { get; set; }
+        public int? MDM_ID { get; set; }
 
         public virtual MdmDQImpact MdmDQImpacts { get; set; }
 

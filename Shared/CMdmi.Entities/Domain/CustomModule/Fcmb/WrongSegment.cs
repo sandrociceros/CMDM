@@ -24,5 +24,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
         public string SUBSEGMENTNAME { get; set; }
         public int? CORP_ID { get; set; }
         public DateTime? DATE_OF_RUN { get; set; }
+        public string SCHEME_CODE { get; set; }
+        public string ACCOUNTNO { get; set; }
     }
 }

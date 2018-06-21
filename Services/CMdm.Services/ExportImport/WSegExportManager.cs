@@ -38,15 +38,18 @@ namespace CMdm.Services.ExportImport
             {
 
                 new PropertyByName<WrongSegment>("Customer ID", p => p.ORGKEY),
-
+                new PropertyByName<WrongSegment>("Account Number", p => p.ACCOUNTNO),
+                new PropertyByName<WrongSegment>("Scheme Code", p => p.SCHEME_CODE),
                 new PropertyByName<WrongSegment>("First Name", p => p.CUST_FIRST_NAME),
                 new PropertyByName<WrongSegment>("Middle Name", p => p.CUST_MIDDLE_NAME),
                 new PropertyByName<WrongSegment>("Last Name", p => p.CUST_LAST_NAME),
+                new PropertyByName<WrongSegment>("Gender", p => p.GENDER),
                 new PropertyByName<WrongSegment>("Date of Birth", p => p.CUST_DOB.ToString()),
                 new PropertyByName<WrongSegment>("Branch Code", p => p.PRIMARY_SOL_ID),
                 new PropertyByName<WrongSegment>("Segmentation Class", p => p.SEGMENTATION_CLASS),
                 new PropertyByName<WrongSegment>("Segment Name", p => p.SEGMENTNAME),
                 new PropertyByName<WrongSegment>("SubSegment", p => p.SUBSEGMENT),
+                new PropertyByName<WrongSegment>("SubSegment Name", p => p.SUBSEGMENTNAME),
                 new PropertyByName<WrongSegment>("Corp ID", p => p.CORP_ID),
                 new PropertyByName<WrongSegment>("Date of Run", p => p.DATE_OF_RUN.ToString()),
             };

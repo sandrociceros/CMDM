@@ -109,6 +109,7 @@
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\ActivityLog.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\DistinctDocs.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\DistinctRefCode.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\DqiSummary.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\EmailPhone.cs" />

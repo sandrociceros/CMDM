@@ -618,6 +618,7 @@
     <Compile Include="Models\Customer\OtherDetails.cs" />
     <Compile Include="Models\CustomModule\Fcmb\ActivityLogModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\CustSegmentModel.cs" />
+    <Compile Include="Models\CustomModule\Fcmb\DistinctDocsModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\DistinctRefCodeModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\DqiSummaryModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\EmailPhoneModel.cs" />

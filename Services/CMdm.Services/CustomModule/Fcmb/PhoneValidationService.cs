@@ -115,7 +115,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Queitems</returns>
-        public virtual IPagedList<PhoneValidation> GetAllPhoneValidations(string custId = "", string fname = "", string mname = "", string lname = "",
+        public virtual IPagedList<PhoneValidation> GetAllPhoneValidations(string custId = "", string accno = "", string fname = "", string mname = "", string lname = "",
             string branchCode = "", int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "")
         {
             List<PhoneValidation> result = default(List<PhoneValidation>);
@@ -123,7 +123,7 @@ namespace CMdm.Services.CustomModule.Fcmb
             if (string.IsNullOrWhiteSpace(sortExpression))
                 sortExpression = "LAST_RUN_DATE DESC";
             // Step 1 - Calling Select on the DAC.
-            result = _pvDAC.SelectPhoneValidation(custId, fname, mname, lname, branchCode, pageIndex, pageSize, sortExpression);
+            result = _pvDAC.SelectPhoneValidation(custId, accno, fname, mname, lname, branchCode, pageIndex, pageSize, sortExpression);
 
             // Step 2 - Get count.
             //totalRowCount = _dqqueDAC.Count(name); i dont need this cos i can do items.totalcount

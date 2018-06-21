@@ -44,7 +44,7 @@ namespace CMdm.Services.DqQue
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<MdmDQQue> GetAllQueItems(string name = "",
+        IPagedList<MdmDQQue> GetAllQueItems(string name = "", int? mdmId = 0,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
         IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null,  string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,

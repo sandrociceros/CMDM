@@ -60,17 +60,46 @@ namespace CMdm.UI.Web.Controllers
             var mdmDQQues = db.MdmDQQues.Include(m => m.MdmDQImpacts).Include(m => m.MdmDQPriorities).Include(m => m.MdmDQQueStatuses);
             return View(mdmDQQues.ToList().OrderBy(a=>a.RECORD_ID));
         }
-        public ActionResult List()
+        public ActionResult List(int? id)
         {
 
             var model = new DqQueListModel();
+
+            model.MdmList.Add(new SelectListItem
+            {
+                Value = "1",
+                Text = "Individual Customer"
+            });
+            model.MdmList.Add(new SelectListItem
+            {
+                Value = "2",
+                Text = "Corporate Customer",
+                Selected = true
+            });
+            model.MdmList.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
+            model.MDM_ID = id == null ? 0 : Convert.ToInt32(id);
+
             return View(model);
         }
         [HttpPost]
         public virtual ActionResult List(DataSourceRequest command, DqQueListModel model, string sort, string sortDir)
         {
+            var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
+            //RouteValueDictionary routeValues;
 
-            var items = _dqQueService.GetAllQueItems(model.SearchName, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            int? mdmId = 0;
+            if (routeValues.ContainsKey("id"))
+                mdmId = int.Parse((string)routeValues["id"]);
+            else
+                mdmId = model.MDM_ID;
+
+            var items = _dqQueService.GetAllQueItems(model.SearchName, mdmId, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;

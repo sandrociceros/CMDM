@@ -88,6 +88,16 @@ namespace CMdm.UI.Web.Controllers
             });
             model.Reasons.Add(new SelectListItem
             {
+                Text = "SUBSECTOR IS NULL",
+                Value = "SUBSECTOR IS NULL"
+            });
+            model.Reasons.Add(new SelectListItem
+            {
+                Text = "SECTOR IS NULL",
+                Value = "SECTOR IS NULL"
+            });
+            model.Reasons.Add(new SelectListItem
+            {
                 Value = "0",
                 Text = "All",
                 Selected = true
@@ -124,7 +134,8 @@ namespace CMdm.UI.Web.Controllers
                 model.Branches.Add(new SelectListItem
                 {
                     Value = "0",
-                    Text = "All"
+                    Text = "All",
+                    Selected = true
                 });
             }
 

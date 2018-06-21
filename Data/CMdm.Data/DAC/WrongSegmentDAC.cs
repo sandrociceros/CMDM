@@ -86,7 +86,8 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<WrongSegment> SelectWrongSegment(string custid, string fname, string mname, string lname, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<WrongSegment> SelectWrongSegment(string custid, string accountno, string fname, string mname, string lname, string branchCode, 
+            int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -96,6 +97,8 @@ namespace CMdm.Data.DAC
 
                 if (!string.IsNullOrWhiteSpace(custid))
                     query = query.Where(v => v.ORGKEY.Contains(custid));
+                if (!string.IsNullOrWhiteSpace(accountno))
+                    query = query.Where(v => v.ACCOUNTNO.Contains(accountno));
                 if (!string.IsNullOrWhiteSpace(fname))
                     query = query.Where(v => v.CUST_FIRST_NAME.ToUpper().Contains(fname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(mname))

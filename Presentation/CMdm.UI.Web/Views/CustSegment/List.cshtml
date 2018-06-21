@@ -119,7 +119,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
-                                <button type="button" id="search-products" class="btn btn-warning btn-search">
+                                <button type="submit" id="search-products" class="btn btn-warning btn-search">
                                     <i class="fa fa-search"></i>
                                     Search
                                 </button>
@@ -316,7 +316,7 @@
             });
 
             /**/
-            $("#CUST_FIRST_NAME").keydown(function (event) {
+            $("#CUST_FIRST_NAME,#ACCOUNT_NO, #ORGKEY, #CUSTOMER_TYPE, #CUST_FIRST_NAME, #CUST_MIDDLE_NAME, #CUST_LAST_NAME, #PRIMARY_SOL_ID, #REASON").keydown(function (event) {
             /**/
             if (event.keyCode === 13) {
                 $("#search-products").click();
