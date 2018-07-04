@@ -95,6 +95,25 @@ namespace CMdm.UI.Web.Controllers
                 });
             }
 
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Individual",
+                Text = "Individual",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Corporate",
+                Text = "Corporate",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
             _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Customer Outstanding Documents Report", DateTime.Now);
             return View(model);
         }
@@ -103,7 +122,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult DistinctList(DataSourceRequest command, DistinctDocsModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllDistinctDocs(model.ACCT_NAME, model.CIF_ID, model.SOL_ID, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllDistinctDocs(model.ACCT_NAME, model.CIF_ID, model.SOL_ID, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             
             DateTime _today = DateTime.Now.Date;
             var gridModel = new DataSourceResult
@@ -118,7 +137,8 @@ namespace CMdm.UI.Web.Controllers
                     SOL_ID = x.SOL_ID,
                     ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
                     ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
-                    CIF_ID = x.CIF_ID
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
                 }),
                 Total = items.TotalCount
             };
@@ -130,7 +150,7 @@ namespace CMdm.UI.Web.Controllers
         public virtual ActionResult DocumentsList(DataSourceRequest command, OutstandingDocModel model, string sort, string sortDir)
         {
 
-            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllOutDocItems(model.SearchName, model.CIF_ID, model.FORACID, model.BRANCH_CODE, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             //var logItems = _logger.GetAllLogs(createdOnFromValue, createdToFromValue, model.Message,
             //    logLevel, command.Page - 1, command.PageSize);
             DateTime _today = DateTime.Now.Date;
@@ -153,7 +173,8 @@ namespace CMdm.UI.Web.Controllers
                     SOL_ID = x.SOL_ID,
                     ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
                     ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
-                    CIF_ID = x.CIF_ID
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
                     //Id = x.RECORD_ID
 
                 }),
@@ -183,6 +204,25 @@ namespace CMdm.UI.Web.Controllers
                 Selected = true
             });
 
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Individual",
+                Text = "Individual",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "Corporate",
+                Text = "Corporate",
+            });
+
+            model.CustomerTypes.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "All",
+                Selected = true
+            });
+
             return View(model);
         }
 
@@ -197,7 +237,7 @@ namespace CMdm.UI.Web.Controllers
             if (routeValues.ContainsKey("id"))
                 goldenRecord = (string)routeValues["id"];
 
-            var items = _dqQueService.GetAllOutDocItems(model.ACCT_NAME, goldenRecord, model.FORACID, model.BRANCH_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllOutDocItems(model.ACCT_NAME, goldenRecord, model.FORACID, model.BRANCH_CODE, model.CUSTOMERTYPE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new OutstandingDocModel
@@ -217,7 +257,8 @@ namespace CMdm.UI.Web.Controllers
                     SOL_ID = x.SOL_ID,
                     ACCTOFFICER_CODE = x.ACCTOFFICER_CODE,
                     ACCTOFFICER_NAME = x.ACCTOFFICER_NAME,
-                    CIF_ID = x.CIF_ID
+                    CIF_ID = x.CIF_ID,
+                    CUSTOMERTYPE = x.CUSTOMERTYPE
                     //Id = x.RECORD_ID
 
                     }),

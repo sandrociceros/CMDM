@@ -13,6 +13,10 @@ using CMdm.Entities.Domain.Dqi;
 using CMdm.Framework.Kendoui;
 using CMdm.Services.DqQue;
 using CMdm.UI.Web.Models.DqQue;
+using CMdm.Services.Security;
+using CMdm.Services.Messaging;
+using CMdm.Data.Rbac;
+using CMdm.Entities.Domain.User;
 //using CMdm.Core;
 
 namespace CMdm.UI.Web.Controllers
@@ -24,12 +28,18 @@ namespace CMdm.UI.Web.Controllers
         private IDqQueService _dqQueService;
         private AppDbContext db = new AppDbContext();
         private DQQueBiz bizrule;
+        private IPermissionsService _permissionservice;
+        private CustomIdentity identity;
+        private IMessagingService _messagingService;
         #endregion
         #region Constructors
         public DQQueController()
         {
             //bizrule = new DQQueBiz();
             _dqQueService = new DqQueService();
+            _messagingService = new MessagingService();
+
+            _permissionservice = new PermissionsService();
         }
         #endregion
 
@@ -62,6 +72,7 @@ namespace CMdm.UI.Web.Controllers
         }
         public ActionResult List(int? id)
         {
+            identity = ((CustomPrincipal)User).CustomIdentity;
 
             var model = new DqQueListModel();
 
@@ -85,6 +96,7 @@ namespace CMdm.UI.Web.Controllers
 
             model.MDM_ID = id == null ? 0 : Convert.ToInt32(id);
 
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Data Quality Queue", DateTime.Now);
             return View(model);
         }
         [HttpPost]
@@ -140,6 +152,7 @@ namespace CMdm.UI.Web.Controllers
             if (!User.Identity.IsAuthenticated)
                 return AccessDeniedView();
             var identity = ((CustomPrincipal)User).CustomIdentity;
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
 
             var model = new DqquebrnListModel();
             
@@ -153,11 +166,44 @@ namespace CMdm.UI.Web.Controllers
             //        Text = at.Name
             //    });
             //}
-            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
-            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
-            int OpenIssues = (int)IssueStatus.Open;
+            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
 
-            
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = curBranchList.Where(a => a.REGION_ID == identity.RegionId);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = curBranchList.Where(a => a.ZONECODE == identity.ZoneId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == identity.BranchId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == "-1");
+            }
+
+            model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+                model.Branches.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = "All",
+                    Selected = false
+                });
+            }
+
+            int OpenIssues = (int)IssueStatus.Open;
+                        
             model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION", OpenIssues).ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
             model.Catalogs = new SelectList(db.MdmCatalogs, "CATALOG_ID", "CATALOG_NAME", Id).ToList();
@@ -182,6 +228,7 @@ namespace CMdm.UI.Web.Controllers
             //    Value = "0",
             //    Text = "All"
             //});
+            _messagingService.SaveUserActivity(identity.ProfileId, "Viewed Issue List for his / her branch", DateTime.Now);
             return View(model);
         }
         [HttpPost]
@@ -205,7 +252,7 @@ namespace CMdm.UI.Web.Controllers
             if (routeValues.ContainsKey("id"))
                 catalogId = int.Parse((string)routeValues["id"]);
 
-            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, catalogId, model.CUST_ID, model.RULE_ID,  identity.BranchId, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
+            var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, catalogId, model.CUST_ID, model.RULE_ID,  model.BRANCH_CODE, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
             {
                 Data = items.Select(x => new DqquebrnListModel

@@ -20,7 +20,9 @@ using Elmah;
 using CMdm.Services;
 using TwoFactorAuthenticationSvc;
 using CMdm.Services.Messaging;
+using CMdm.UI.Web.Models;
 using System.IO;
+using System.Windows;
 
 namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 {
@@ -87,8 +89,6 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 
                     string domainName1 = db.Settings.Where(a => a.SETTING_NAME == "SMTP_DOMAIN").Select(a => a.SETTING_VALUE).FirstOrDefault();
                    
-
-
                     //domain: “fcmb.com” All FCMB UserIDs in FCMB AD is imported into this container in VASCO IAS
                     //userID: Provide the “userID” from the banking application
                     //pin: leave blank
@@ -115,7 +115,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 
                                 if (localuser == null)
                                 {
-                                    HttpContext.Current.Session["Response"] = "User not profiled";
+                                    HttpContext.Current.Session["Response"] = "Contact your system administrator";
                                     authenticated1 = false;
                                 }
                                 else
@@ -128,8 +128,8 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                         else
                         {
                             ErrorSignal.FromCurrentContext().Raise(new NotImplementedException(hostResponse));
-                            HttpContext.Current.Session["Response"] = hostResponse;
-                            _messagingService.SaveUserActivity(1, hostResponse + " by " + username, DateTime.Now);
+                            HttpContext.Current.Session["Response"] = "Please input a valid token";
+                            _messagingService.SaveUserActivity(0, hostResponse + " by " + username, DateTime.Now, username);
                         }
                         //if (true == adAuth.IsAuthenticated(loginDomain, username, password))
                         //{
@@ -180,7 +180,7 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
 
                                 if (localuser == null)
                                 {
-                                    HttpContext.Current.Session["Response"] = "User not profiled";
+                                    HttpContext.Current.Session["Response"] = "Contact your system administrator";
                                     authenticated = false;
                                 }
                                 else
@@ -189,7 +189,6 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                                     authenticated = true;
                                 }                                
                             }
-
                         }
 
                     }
@@ -198,7 +197,6 @@ namespace CMdm.UI.Web.Helpers.CrossCutting.Security
                         HttpContext.Current.Session["Response"] = ex.Message;
                         ErrorSignal.FromCurrentContext().Raise(ex);
                     }
-
 
                     return authenticated;
                 #endregion;

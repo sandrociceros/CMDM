@@ -82,6 +82,7 @@ namespace CMdm.Services.ExportImport
 
                     // get handles to the worksheets
                     var worksheet = xlPackage.Workbook.Worksheets.Add(typeof(T).Name);
+                    var worksheet2 = xlPackage.Workbook.Worksheets.Add(typeof(T).Name + "2");
                     var fWorksheet = xlPackage.Workbook.Worksheets.Add("DataForFilters");
                     fWorksheet.Hidden = eWorkSheetHidden.VeryHidden;
 
@@ -90,10 +91,19 @@ namespace CMdm.Services.ExportImport
                     manager.WriteCaption(worksheet, SetCaptionStyle);
 
                     var row = 2;
+                    var row2 = 2;
+                    int progress = 0;
                     foreach (var items in itemsToExport)
                     {
                         manager.CurrentObject = items;
-                        manager.WriteToXlsx(worksheet, row++, false, fWorksheet: fWorksheet);
+                        if (progress >= 1000000)
+                        {
+                            manager.WriteToXlsx(worksheet2, row2++, false, fWorksheet: fWorksheet);
+                        }
+                        else
+                            manager.WriteToXlsx(worksheet, row++, false, fWorksheet: fWorksheet);
+
+                        progress++;
                     }
 
                     xlPackage.Save();

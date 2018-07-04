@@ -82,8 +82,16 @@
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-md-7">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.Label("Customer Type")
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.CMdmDropDownListFor(model => model.CUSTOMERTYPE, Model.CustomerTypes)
+                                    </div>
                                 </div>
+                            </div>
                             </div>
                         <div class="row">
                             <div class="col-md-7 col-md-offset-5">
@@ -192,6 +200,11 @@
                                             field: "ACCTOFFICER_NAME",
                                             title: "Account Officer Name",
                                             width: 100
+                                        },
+                                        {
+                                            field: "CUSTOMERTYPE",
+                                            title: "Customer Type",
+                                            width: 70
                                         }
 
                                     ]
@@ -278,6 +291,7 @@
                         SOL_ID: $('#SOL_ID').val(),
                         ACCT_NAME: $('#ACCT_NAME').val(),
                         CIF_ID: $('#CIF_ID').val(),
+                        CUSTOMERTYPE: $('#CUSTOMERTYPE').val(),
                     };
                     addAntiForgeryToken(data);
                     return data;

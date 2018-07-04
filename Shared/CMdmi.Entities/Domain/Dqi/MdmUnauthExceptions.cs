@@ -50,7 +50,6 @@ namespace CMdm.Entities.Domain.Dqi
         [DisplayName("Exception reason")]
         public string REASON { get; set; }
         public string AUTH_REJECT_REASON { get; set; }
-
         public string FIRST_NAME { get; set; }
 
         public string SURNAME { get; set; }

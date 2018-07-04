@@ -32,7 +32,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string custid = "", string acctid = "", string branchCode = "",
+        IPagedList<OutStandingDoc> GetAllOutDocItems(string name = "", string custid = "", string acctid = "", string branchCode = "", string customertype = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
     
     #endregion OutstandingDocs
@@ -58,7 +58,7 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="pageSize">Page size</param>
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
-        IPagedList<DistinctDocs> GetAllDistinctDocs(string name = "", string custid = "", string branchCode = "",
+        IPagedList<DistinctDocs> GetAllDistinctDocs(string name = "", string custid = "", string branchCode = "", string customertype = "",
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
 
         #endregion DistinctDocs

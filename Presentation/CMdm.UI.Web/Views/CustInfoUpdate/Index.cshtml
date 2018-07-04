@@ -1,0 +1,28 @@
+﻿@model CMdm.UI.Web.Models.Customer.CIUModel
+@{
+    ViewBag.Title = "Customer Information Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Search Customer Data
+            @*<small><i class="fa fa-arrow-circle-left"></i>@Html.ActionLink("Back To List", "Index")</small>*@
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="search" class="btn bg-yellow">
+                <i class="fa fa-floppy-o"></i>
+                Search
+            </button>
+            <button type="reset" name="reset-form" class="btn bg-purple">
+                <i class="fa fa-floppy-o"></i>
+                Reset
+            </button>
+
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}

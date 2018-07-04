@@ -157,6 +157,7 @@
     <Compile Include="Domain\User\AuthorizationLevel.cs" />
     <Compile Include="Domain\User\CM_AUTH_LEVELS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AssemblyMenuModel.cs" />
     <Compile Include="ViewModels\CustExceptionsModel.cs" />
     <Compile Include="ViewModels\DynamicViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />

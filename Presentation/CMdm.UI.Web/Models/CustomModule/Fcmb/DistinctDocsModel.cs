@@ -12,6 +12,7 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public DistinctDocsModel()
         {
             Branches = new List<SelectListItem>();
+            CustomerTypes = new List<SelectListItem>();
         }
 
         [DisplayName("Customer ID")]
@@ -30,6 +31,8 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         public string ACCTOFFICER_NAME { get; set; }
         [DisplayName("Branch Name")]
         public string BRANCH_NAME { get; set; }
+        [DisplayName("Customer Type")]
+        public string CUSTOMERTYPE { get; set; }
 
         public int Id
         {
@@ -37,5 +40,6 @@ namespace CMdm.UI.Web.Models.CustomModule.Fcmb
         }
 
         public IList<SelectListItem> Branches { get; set; }
+        public IList<SelectListItem> CustomerTypes { get; set; }
     }
 }

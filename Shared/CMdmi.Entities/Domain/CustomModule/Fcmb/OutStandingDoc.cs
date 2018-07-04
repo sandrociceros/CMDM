@@ -50,5 +50,7 @@ namespace CMdm.Entities.Domain.CustomModule.Fcmb
 
         public string CIF_ID { get; set; }
 
+        public string CUSTOMERTYPE { get; set; }
+
     }
 }

@@ -32,6 +32,6 @@ namespace CMdm.Services.CustomModule.Fcmb
         /// <param name="sortExpression">A value indicating whether to show hidden records</param>
         /// <returns>Vendors</returns>
         IPagedList<CustSegment> GetAllCustSegments(string custid = "", string custtype = "", string accno = "", string fname = "", string mname = "", string lname = "", string branchCode = "",
-            string reason = "", int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
+             string sector = "", string subsector = "", int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
     }
 }

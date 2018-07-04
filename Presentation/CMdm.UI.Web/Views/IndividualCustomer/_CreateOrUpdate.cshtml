@@ -413,15 +413,33 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#BioData_DATE_OF_BIRTH').change(function (e) {
+            var dateString = $('#BioData_DATE_OF_BIRTH').val();
+            var today = new Date();
+            var birthDate = new Date(dateString);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 0) {
+                age = 0;
+            }
+
+            $('#BioData_AGE').val(age);
+        });
+
+        $('#AddressDetails_ZIP_POSTAL_CODE').keyup(function (e) {
+            $('#AddressDetails_ZIP_POSTAL_CODE').val().replace(/\-/g, '');
+        });
+    });
+</script>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function () {
-            $('#zip').keyup(function (e) {
-                $('#zip').val().replace(/\-/g, '');
-            });
-        });
-    </script>
+    
 }
 <!--
 <style>

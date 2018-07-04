@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    @Html.Label("Customer Id")
+                                    @Html.Label("Customer No")
                                 </div>
                                 <div class="col-md-8">
                                     @Html.CMdmEditorFor(model => model.CUST_ID)
@@ -178,7 +178,7 @@
                                     },
                                      {
                                          field: "CUST_ID",
-                                         title: "Customer Id",
+                                         title: "Customer No",
                                          width: 100
 
                                      },
@@ -186,7 +186,7 @@
                                     //command: { text: "Modify", template: "<a class='k-grid-decreaseIndent k-button' onclick='showDetails($(this))' >Modify</a>", }, title: "Operation", width: "100px" },
                                   
                                     field: "REASON",
-                                    title: "Exception Reason",
+                                    title: "Error Description",
                                     width: 100
  
  
@@ -627,10 +627,9 @@
             age = 0;
         }
 
-        $('#BioData_AGE').val(age);
-        
-        
+        $('#BioData_AGE').val(age);        
     }
+
     function ApproveBioData(){
     
         //  alert('Hello');saving display

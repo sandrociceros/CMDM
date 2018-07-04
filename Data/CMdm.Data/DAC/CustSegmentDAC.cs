@@ -84,8 +84,8 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<CustSegment> SelectCustSegment(string custid, string custtype, string accno, string fname, string mname, string lname, string branchCode, string reason,
-            int startRowIndex, int maximumRows, string sortExpression)
+        public List<CustSegment> SelectCustSegment(string custid, string custtype, string accno, string fname, string mname, string lname, string branchCode,
+            string sector, string subsector, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -103,10 +103,22 @@ namespace CMdm.Data.DAC
                     query = query.Where(v => v.CUST_MIDDLE_NAME.ToUpper().Contains(mname.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(lname))
                     query = query.Where(v => v.CUST_LAST_NAME.ToUpper().Contains(lname.ToUpper()));
-                if (!string.IsNullOrWhiteSpace(reason) && reason != "0")
-                    query = query.Where(v => v.REASON.ToUpper().Equals(reason.ToUpper()));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.PRIMARY_SOL_ID.Contains(branchCode));
+                if (!string.IsNullOrWhiteSpace(sector) && sector != "0")
+                {
+                    if(sector.Equals("Sector is null"))
+                        query = query.Where(v => v.SECTOR == null);
+                    else
+                        query = query.Where(v => v.SECTOR != null);
+                }
+                if (!string.IsNullOrWhiteSpace(subsector) && subsector != "0")
+                {
+                    if (subsector.Equals("Subsector is null"))
+                        query = query.Where(v => v.SUBSECTOR == null);
+                    else
+                        query = query.Where(v => v.SUBSECTOR != null);
+                }
                 // Append filters.
                 //query = AppendFilters(query, name);
 

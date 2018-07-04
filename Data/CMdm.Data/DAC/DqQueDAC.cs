@@ -197,7 +197,7 @@ namespace CMdm.Data.DAC
                 var query = db.MdmDqRunExceptions.Select(q => q).Include(a=>a.MdmDQPriorities).Include(a=>a.MdmDQQueStatuses);
 
                 if (!string.IsNullOrWhiteSpace(name))
-                    query = query.Where(v => v.REASON.Contains(name));
+                    query = query.Where(v => v.REASON.ToUpper().Contains(name.ToUpper()));
                 //if (createdOnFrom.HasValue)
                 //    query = query.Where(al => createdOnFrom.Value <= al.RUN_DATE);
                 //if (createdOnTo.HasValue)
@@ -216,7 +216,7 @@ namespace CMdm.Data.DAC
                     int catalog = (int)catalogId.Value;
                     query = query.Where(d => d.CATALOG_ID == catalog);
                 }
-                if (!string.IsNullOrWhiteSpace(BranchId))
+                if (!string.IsNullOrWhiteSpace(BranchId) & BranchId != "0")
                 {
                     //string brnId = (string)BranchId.Value;
                     query = query.Where(d => d.BRANCH_CODE == BranchId);
@@ -236,7 +236,7 @@ namespace CMdm.Data.DAC
                 //query = AppendFilters(query, name);
 
                 // Sort and page.
-                query = query.OrderBy(a => a.RUN_DATE).Take(10); //    //OrderBy(a => a.CREATED_DATE)  //
+                query = query.OrderBy(a => a.RUN_DATE); //    //OrderBy(a => a.CREATED_DATE)  //
                         //.Skip(startRowIndex).Take(maximumRows);
 
                 // Return result.
@@ -702,7 +702,7 @@ namespace CMdm.Data.DAC
                 {
                     int prior = (int)priority.Value;
                     query = query.Where(d => d.ISSUE_PRIORITY == prior);
-
+ 
                 }
                 // Append filters.
                 //query = AppendFilters(query, name);

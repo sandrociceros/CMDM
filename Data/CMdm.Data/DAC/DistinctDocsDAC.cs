@@ -86,7 +86,7 @@ namespace CMdm.Data.DAC
         /// <param name="sortExpression">The sort expression.</param>
         /// <param name="name">A name value.</param>
         /// <returns>A collection of  objects.</returns>		
-        public List<DistinctDocs> SelectDistinctDocs(string name, string custid, string branchCode, int startRowIndex, int maximumRows, string sortExpression)
+        public List<DistinctDocs> SelectDistinctDocs(string name, string custid, string branchCode, string customertype, int startRowIndex, int maximumRows, string sortExpression)
         {
             using (var db = new AppDbContext())
             {
@@ -100,6 +100,8 @@ namespace CMdm.Data.DAC
                     query = query.Where(v => v.CIF_ID.Contains(custid));
                 if (!string.IsNullOrWhiteSpace(branchCode) && branchCode != "0")
                     query = query.Where(v => v.SOL_ID.Contains(branchCode));
+                if (!string.IsNullOrWhiteSpace(customertype) && customertype != "0")
+                    query = query.Where(v => v.CUSTOMERTYPE.ToUpper().Contains(customertype.ToUpper()));
                 // Append filters.
                 //query = AppendFilters(query, name);
 

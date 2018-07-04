@@ -53,7 +53,7 @@ namespace CMdm.Services.Messaging
                 case MessageJobEnum.MailType.Change:
                     mailTemplate = "Change.cshtml";
                     mailSubject = "A new Customer information has been changed";
-                    recepientNames = GetChekersbyMakerRole(userProfile);
+                    recepientNames = GetChekersbyMakerRole(userProfile, branchId.ToString());
                     break;
                 case MessageJobEnum.MailType.Reject:
                     mailTemplate = "Reject.cshtml";
@@ -66,44 +66,79 @@ namespace CMdm.Services.Messaging
                     break;
             }
 
-            backJob = new CM_BACK_JOBS
+            try
             {
-                CUSTOMER_NO = customerNo,
-                JOB_TYPE = 2,
-                FROM_EMAIL = GetUserNamebyUserId(userProfile),
-                DATE_LOGGED = DateTime.Now,
-                CREATED_BY = userProfile.ToString(),
-                RCPT_EMAIL = recepientNames.SingleOrDefault(),
-                FLG_STATUS = 1,
-                DATE_SENT = DateTime.Now,
-                COUNT_RETRIES = 0,
-                MSG_SUBJECT = mailSubject,
-                BRANCH_ID = branchId,
-                RECIPIENTNAME = recepientNames.SingleOrDefault(),
-                REQUIREDDATE = DateTime.Now,
-                MAILBODY = null,
-                MAILBODY_2 = null,
-                MAILTYPE = (int)mailType,
-                MAIL_TEMPLATE = mailTemplate,
-                USERFULLNAME = GetUserFullNamebyProdileId(userProfile),
-                BRANCHNAME = GetBranchName(branchId.ToString())
-            };
+                backJob = new CM_BACK_JOBS
+                {
+                    CUSTOMER_NO = customerNo,
+                    JOB_TYPE = 2,
+                    FROM_EMAIL = GetUserNamebyUserId(userProfile),
+                    DATE_LOGGED = DateTime.Now,
+                    CREATED_BY = userProfile.ToString(),
+                    RCPT_EMAIL = recepientNames.SingleOrDefault(),
+                    FLG_STATUS = 1,
+                    DATE_SENT = DateTime.Now,
+                    COUNT_RETRIES = 0,
+                    MSG_SUBJECT = mailSubject,
+                    BRANCH_ID = branchId,
+                    RECIPIENTNAME = recepientNames.SingleOrDefault(),
+                    REQUIREDDATE = DateTime.Now,
+                    MAILBODY = null,
+                    MAILBODY_2 = null,
+                    MAILTYPE = (int)mailType,
+                    MAIL_TEMPLATE = mailTemplate,
+                    USERFULLNAME = GetUserFullNamebyProdileId(userProfile),
+                    BRANCHNAME = GetBranchName(branchId.ToString())
+                };
+
+                string htmlbody = GenerateBody(backJob);
+                if (htmlbody.Length > 4000)
+                {
+                    backJob.MAILBODY = htmlbody.Substring(1, 3999);
+                    backJob.MAILBODY_2 = htmlbody.Substring(4000);
+                }
+                else
+                {
+                    backJob.MAILBODY = htmlbody;
+                }
+                
+                db.CM_BACK_JOBS.Add(backJob);
+                db.SaveChanges();
+                SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }            
             
-            string htmlbody = GenerateBody(backJob);
-            backJob.MAILBODY = htmlbody;
-            db.CM_BACK_JOBS.Add(backJob);
-            db.SaveChanges();
-            SendMail(recepientNames, mailSubject, htmlbody, backJob.FROM_EMAIL, GetUserFullNamebyProdileId(userProfile));
         }
 
-        public void SaveUserActivity(int userProfile, string activity, DateTime activityDate)
+        public void SaveUserActivity(int userProfile, string activity, DateTime activityDate, string unauthusername = "")
         {
-            string username = GetUserNamebyUserId(userProfile);
-            string fullname = GetUserFullNamebyProdileId(userProfile);
-            string desc = username + " " + activity + " on " + activityDate;
-            string branchCode = GetBranchIdbyProdileId(userProfile);
-            string branchName = GetBranchName(branchCode);
+            string username = "";
+            string fullname = "";
+            string desc = "";
+            string branchCode = "";
+            string branchName = "";
 
+            if (String.IsNullOrEmpty(unauthusername))
+            {
+                username = GetUserNamebyUserId(userProfile);
+                fullname = GetUserFullNamebyProdileId(userProfile);
+                desc = username + " " + activity + " on " + activityDate;
+                branchCode = GetBranchIdbyProdileId(userProfile);
+                branchName = GetBranchName(branchCode);
+            }
+            else
+            {
+                username = unauthusername;
+                fullname = unauthusername;
+                desc = username + " " + activity + " on " + activityDate;
+                branchCode = "";
+                branchName = "";
+            }
+
+            
             using (var db = new AppDbContext())
             {
                 CMDM_ACTIVITY_LOG activity_log;
@@ -124,12 +159,13 @@ namespace CMdm.Services.Messaging
                     db.CMDM_ACTIVITY_LOG.Add(activity_log);
                     db.Entry(activity_log).State = EntityState.Added;
                     db.SaveChanges();
+
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
                 }
-            }
+            }            
         }
 
         public void SendMail(List<string> addresses, string subject, string body, string from, string sender)
@@ -512,7 +548,7 @@ namespace CMdm.Services.Messaging
              select p.USER_ID
             ).SingleOrDefault();
         }
-        public List<string> GetChekersbyMakerRole(int userid)
+        public List<string> GetChekersbyMakerRole(int userid, string branchCode)
         {
             var makerRole = (from p in db.CM_USER_PROFILE
                             where p.PROFILE_ID == userid
@@ -524,6 +560,7 @@ namespace CMdm.Services.Messaging
 
             List<string> checkers = (from r in db.CM_USER_PROFILE
                                      where r.ROLE_ID == checkerRole
+                                     where r.BRANCH_ID == branchCode
                                      select r.USER_ID).ToList();
 
             return checkers;
@@ -653,7 +690,6 @@ namespace CMdm.Services.Messaging
             }
         }
     }
-
     public class EncryptString
     {
 

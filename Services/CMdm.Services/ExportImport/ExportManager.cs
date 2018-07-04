@@ -50,6 +50,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<DistinctDocs>("CustomerId", p => p.CIF_ID),
                 new PropertyByName<DistinctDocs>("Account Officer Code", p => p.ACCTOFFICER_CODE),
                 new PropertyByName<DistinctDocs>("Account Officer Name", p => p.ACCTOFFICER_NAME),
+                new PropertyByName<DistinctDocs>("Customer Type", p => p.CUSTOMERTYPE),
             };
 
             return ExportToXlsx(properties, documents);
@@ -76,6 +77,7 @@ namespace CMdm.Services.ExportImport
                 new PropertyByName<OutStandingDoc>("Customer Id", p => p.CIF_ID),
                 new PropertyByName<OutStandingDoc>("Account Officer Code", p => p.ACCTOFFICER_CODE),
                 new PropertyByName<OutStandingDoc>("Account Officer Name", p => p.ACCTOFFICER_NAME),
+                new PropertyByName<OutStandingDoc>("Customer Type", p => p.CUSTOMERTYPE),
             };
 
             return ExportToXlsx(properties, documents);

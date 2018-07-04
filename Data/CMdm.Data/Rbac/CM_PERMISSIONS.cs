@@ -18,23 +18,23 @@ namespace CMdm.Data.Rbac
         public decimal PERMISSION_ID { get; set; }
 
         [Required]
-        [StringLength(100)]
+        //[StringLength(100)]
         public string PERMISSIONDESCRIPTION { get; set; }
 
         [Required]
-        [StringLength(25)]
+        //[StringLength(25)]
         public string ACTION_NAME { get; set; }
 
         [Required]
-        [StringLength(25)]
+        //[StringLength(25)]
         public string CONTROLLER_NAME { get; set; }
 
         public int PARENT_PERMISSION { get; set; }
 
-        [StringLength(100)]
+        //[StringLength(100)]
         public string FORM_URL { get; set; }
 
-        [StringLength(100)]
+        //[StringLength(100)]
         public string IMAGE_URL { get; set; }
         public string ICON_CLASS { get; set; }
         public string ISOPEN_CLASS { get; set; }
