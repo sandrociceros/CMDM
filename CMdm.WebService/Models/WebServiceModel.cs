@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CMdm.UI.Web.Models.Customer
+namespace CMdm.WebService.Models
 {
     public class WebServiceModel
     {
         public string CUSTOMER_NO { get; set; }
+        public string TITLE { get; set; }
         public string SURNAME { get; set; }
         public string FIRST_NAME { get; set; }
         public string OTHER_NAME { get; set; }
