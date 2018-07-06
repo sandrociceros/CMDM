@@ -104,7 +104,7 @@
                                 },
                                 scrollable: false,
                                 columns: [
-                                    @if (1==1)
+                                    @*@if (1==1)
                                 {
                                         <text>{
                                         field: "PRIORITY",
@@ -118,12 +118,12 @@
                                                 '# if(PRIORITY == 5) {# green #} #' +
                                                 '">#=ISSUE_PRIORITY_DESC#</span>'
                                         },</text>
-                                    } 
+                                    }*@ 
                                     {
                                     field: "DQ_PROCESS_NAME",
                                     title: "Process Name",
                                     width: 250,
-                                    template: '<a href="@Url.Content("~/DQQue/BrnIssueList/")#=CATALOG_ID#">#:DQ_PROCESS_NAME#</a>'                                   
+                                    template: '<a href="@Url.Content("~/DQQue/BrnIssueList/")">#:DQ_PROCESS_NAME#</a>'                                   
                                     }, {
                                     field: "CATALOG_NAME",
                                     title: "Catalog name",
@@ -191,7 +191,8 @@
 
                         function additionalData() {
                             var data = {
-                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val()
+                                SearchName: $('#@Html.FieldIdFor(model => model.SearchName)').val(),
+                                CATALOG_ID: $('#CATALOG_ID').val(),
                             };
                             addAntiForgeryToken(data);
                             return data;

@@ -13,7 +13,7 @@ namespace CMdm.Entities.Domain.Dqi
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("MDM_DQ_QUE")]
+    [Table("VW_MDM_DQ_QUE")]
     public partial class MdmDQQue //: BaseEntity
     {
         [Key]

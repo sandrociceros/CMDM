@@ -17,7 +17,7 @@ namespace CMdm.WebService
         string DoWork();
 
         [OperationContract]
-        [WebGet(UriTemplate = "/GetCustomerDetails/{CUSTOMER_NO}")]
+        [WebGet(UriTemplate = "/GetCustomerDetails/{CUSTOMER_NO}", ResponseFormat = WebMessageFormat.Json)]
         WebServiceModel GetCustomerDetails(string CUSTOMER_NO);
     }
 }

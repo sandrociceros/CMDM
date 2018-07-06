@@ -248,9 +248,15 @@ namespace CMdm.UI.Web.Controllers
             var routeValues = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
             //RouteValueDictionary routeValues;
 
-            int catalogId = 0;
+            int catalogId = 1;
+
             if (routeValues.ContainsKey("id"))
                 catalogId = int.Parse((string)routeValues["id"]);
+
+            if (Request["CATALOG_ID"] != null)
+                catalogId = int.Parse(Request["CATALOG_ID"]);
+            else
+                catalogId = model.CATALOG_ID;
 
             var items = _dqQueService.GetAllBrnQueIssues(model.SearchName, catalogId, model.CUST_ID, model.RULE_ID,  model.BRANCH_CODE, issueStatus, model.PRIORITY_CODE, command.Page - 1, command.PageSize, string.Format("{0} {1}", sort, sortDir));
             var gridModel = new DataSourceResult
@@ -305,8 +311,45 @@ namespace CMdm.UI.Web.Controllers
             //        Text = at.Name
             //    });
             //}
-            var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            //var curBranchList = db.CM_BRANCH.Where(a => a.BRANCH_ID == identity.BranchId);
+            //model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+            _permissionservice = new PermissionsService(identity.Name, identity.UserRoleId);
+            IQueryable<CM_BRANCH> curBranchList = db.CM_BRANCH.OrderBy(x => x.BRANCH_NAME); //.Where(a => a.BRANCH_ID == identity.BranchId);
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Regional))
+            {
+                curBranchList = curBranchList.Where(a => a.REGION_ID == identity.RegionId);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Zonal))
+            {
+                curBranchList = curBranchList.Where(a => a.ZONECODE == identity.ZoneId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else if (_permissionservice.IsLevel(AuthorizationLevel.Branch))
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == identity.BranchId).OrderBy(a => a.BRANCH_NAME);
+            }
+            else
+            {
+                curBranchList = curBranchList.Where(a => a.BRANCH_ID == "-1");
+            }
+
             model.Branches = new SelectList(curBranchList, "BRANCH_ID", "BRANCH_NAME").ToList();
+
+
+            if (_permissionservice.IsLevel(AuthorizationLevel.Enterprise))
+            {
+                model.Branches.Add(new SelectListItem
+                {
+                    Value = "0",
+                    Text = "All",
+                    Selected = false
+                });
+            }
 
             model.Statuses = new SelectList(db.MdmDQQueStatuses, "STATUS_CODE", "STATUS_DESCRIPTION").ToList();
             model.Priorities = new SelectList(db.MdmDQPriorities, "PRIORITY_CODE", "PRIORITY_DESCRIPTION").ToList();
