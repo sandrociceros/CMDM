@@ -17,7 +17,9 @@ namespace CMdm.Entities.Domain.Dqi
             MdmDQQues = new HashSet<MdmDQQue>();
             MdmDqRules = new HashSet<MdmDqRule>();
             MdmDqRunExceptions = new HashSet<MdmDqRunException>();
+            MdmCorpRunExceptions = new HashSet<MdmCorpRunExceptions>();
             MdmUnauthExceptions = new HashSet<MdmUnauthException>();
+            MdmUnauthCorpExceptions = new HashSet<MdmUnauthCorpExceptions>();
         }
         [Key]
         public int PRIORITY_CODE { get; set; }
@@ -26,6 +28,9 @@ namespace CMdm.Entities.Domain.Dqi
         public virtual ICollection<MdmDQQue> MdmDQQues { get; set; }
         public virtual ICollection<MdmDqRule> MdmDqRules { get; set; }
         public virtual ICollection<MdmDqRunException> MdmDqRunExceptions { get; set; }
+        public virtual ICollection<MdmCorpRunExceptions> MdmCorpRunExceptions { get; set; }
         public virtual  ICollection<MdmUnauthException> MdmUnauthExceptions { get; set; }
+        public virtual ICollection<MdmUnauthCorpExceptions> MdmUnauthCorpExceptions { get; set; }
     }
 }
+

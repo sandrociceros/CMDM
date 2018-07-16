@@ -14,13 +14,17 @@ namespace CMdm.Entities.Domain.Dqi
         {
             MdmDQQues = new HashSet<MdmDQQue>();
             MdmDqRunExceptions = new HashSet<MdmDqRunException>();
+            MdmCorpRunExceptions = new HashSet<MdmCorpRunExceptions>();
             MdmUnauthExceptions = new HashSet<MdmUnauthException>();
+            MdmUnauthCorpExceptions = new HashSet<MdmUnauthCorpExceptions>();
         }
         [Key]
         public int STATUS_CODE { get; set; }
         public string STATUS_DESCRIPTION { get; set; }
         public virtual ICollection<MdmDQQue> MdmDQQues { get; set; }
         public  virtual ICollection<MdmDqRunException> MdmDqRunExceptions { get; set; }
+        public virtual ICollection<MdmCorpRunExceptions> MdmCorpRunExceptions { get; set; }
         public virtual ICollection<MdmUnauthException> MdmUnauthExceptions { get; set; }
+        public virtual ICollection<MdmUnauthCorpExceptions> MdmUnauthCorpExceptions { get; set; }
     }
 }

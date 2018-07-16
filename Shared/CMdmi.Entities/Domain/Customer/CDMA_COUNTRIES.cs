@@ -13,7 +13,7 @@ namespace CMdm.Entities.Domain.Customer
     {
         public CDMA_COUNTRIES()
         {
-            CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
+          //  CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
             CdmaForeigner = new HashSet<CDMA_FOREIGN_DETAILS>();
         }
 
@@ -23,7 +23,7 @@ namespace CMdm.Entities.Domain.Customer
         public string COUNTRY_ABBREVIATION { get; set; }
         public decimal UNITED_NATION_NUMBER { get; set; }
         public string DIALING_CODE { get; set; }
-        public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
+        //public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
         public ICollection<CDMA_FOREIGN_DETAILS> CdmaForeigner { get; private set; }
     }
 }

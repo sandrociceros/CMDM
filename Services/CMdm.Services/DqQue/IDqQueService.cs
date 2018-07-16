@@ -13,6 +13,9 @@ namespace CMdm.Services.DqQue
     {
         void ApproveExceptionQueItems(string selectedIds, int userId);  //List<MdmDqRunException> queitems
         void DisApproveExceptionQueItems(string selectedIds, string comments);
+
+        void ApproveExceptionCorp(string selectedIds, int userId);  //List<MdmDqRunException> queitems
+        void DisApproveExceptionCorp(string selectedIds, string comments);
         /// <summary>
         /// Updates the queitem
         /// </summary>
@@ -30,6 +33,7 @@ namespace CMdm.Services.DqQue
         /// <param name="recordId">que identifier</param>
         /// <returns>Vendor</returns>
         MdmDqRunException GetQueDetailItembyId(int recordId);
+        MdmCorpRunExceptions GetCorpDetailItembyId(int recordId);
         /// <summary>
         /// Gets a Queitem by item reference identifier
         /// </summary>
@@ -46,10 +50,13 @@ namespace CMdm.Services.DqQue
         /// <returns>Vendors</returns>
         IPagedList<MdmDQQue> GetAllQueItems(string name = "", int? mdmId = 0,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
-        IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null,  string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+        IPagedList<MdmCorpRunExceptions> GetAllCorpQueIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = "");
+        IPagedList<MdmDqRunException> GetAllBrnQueIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null,  string BranchId = null, IssueStatus? issueStatus = null, int? priority = null, int? tier = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
-        IPagedList<CustExceptionsModel> GetAllBrnUnAuthIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+        IPagedList<CustExceptionsModel> GetAllBrnUnAuthIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null, int? tier = null,
             int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
-
+        IPagedList<CustExceptionsModel> GetAllCorpUnAuthIssues(string name = "", int? catalogId = null, string customerId = null, int? ruleId = null, string BranchId = null, IssueStatus? issueStatus = null, int? priority = null,
+            int pageIndex = 0, int pageSize = int.MaxValue, string sortExpression = ""); //DateTime? createdOnFrom = null,        DateTime? createdOnTo = null,
     }
 }

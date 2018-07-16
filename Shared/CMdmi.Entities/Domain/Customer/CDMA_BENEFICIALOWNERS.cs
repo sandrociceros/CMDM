@@ -27,5 +27,6 @@ namespace CMdm.Entities.Domain.Customer
         public string AUTHORISED_BY { get; set; }
         public DateTime? AUTHORISED_DATE { get; set; }
         public string IP_ADDRESS { get; set; }
+        public int? QUEUE_STATUS { get; set; }
     }
 }

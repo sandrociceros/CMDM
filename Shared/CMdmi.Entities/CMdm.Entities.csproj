@@ -66,6 +66,7 @@
     <Compile Include="Domain\Customer\CDMA_CUST_TITLE.cs" />
     <Compile Include="Domain\Customer\CDMA_EMPLOYMENT_DETAILS.cs" />
     <Compile Include="Domain\Customer\CDMA_FOREIGN_DETAILS.cs" />
+    <Compile Include="Domain\Customer\CDMA_GUARANTOR.cs" />
     <Compile Include="Domain\Customer\CDMA_IDENTIFICATION_TYPE.cs" />
     <Compile Include="Domain\Customer\CDMA_INCOME_BAND.cs" />
     <Compile Include="Domain\Customer\CDMA_INDIVIDUAL_ADDRESS_DETAIL_LOG.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Domain\Customer\TMP_SEC_SUB3.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\AccountOfficer.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\ActivityLog.cs" />
+    <Compile Include="Domain\CustomModule\Fcmb\CustAccount.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\CustSegment.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\DistinctDocs.cs" />
     <Compile Include="Domain\CustomModule\Fcmb\DistinctRefCode.cs" />
@@ -123,6 +125,8 @@
     <Compile Include="Domain\Dqi\DqiAggrTransactions.cs" />
     <Compile Include="Domain\Dqi\DqiTransactions.cs" />
     <Compile Include="Domain\Dqi\IssueStatus.cs" />
+    <Compile Include="Domain\Dqi\MdmCorpRunExceptions.cs" />
+    <Compile Include="Domain\Dqi\MdmUnauthCorpExceptions.cs" />
     <Compile Include="Domain\Dqi\MdmUnauthExceptions.cs" />
     <Compile Include="Domain\Dqi\MDM_DQI_SETTING.cs" />
     <Compile Include="Domain\Entity\EntityDetails.cs" />

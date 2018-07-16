@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace CMdm.UI.Web.Models.Customer
 {
-    public class CorpADDModel
+    public class GuarantorModel
     {
-        public CorpADDModel()
+        public GuarantorModel()
         {
             Branches = new List<SelectListItem>();
         }
+        [DisplayName("Customer NO")]
         public string CUSTOMER_NO { get; set; }
-        [DisplayName("Branch name")]
+        [DisplayName("Last Name Of Guarantor")]
+        public string LNAME_OF_GUARANTOR { get; set; }
+        [DisplayName("First Name Of Guarantor")]
+        public string FNAME_OF_GUARANTOR { get; set; }
+        [DisplayName("TIN Of Guarantor")]
+        public string TIN_OF_GUARANTOR { get; set; }
+        [DisplayName("BVN Of Guarantor")]
+        public string BVN_OF_GUARANTOR { get; set; }
+        [DisplayName("Guaranteed Amount")]
+        public decimal? GURANTEED_AMOUNT { get; set; }
+        [DisplayName("Branch")]
         public string BRANCH_CODE { get; set; }
-        [DisplayName("Counterparties Clients of Customer")]
-        public string COUNTERPARTIES_CLIENTS_OF_CUST { get; set; }
-        public int? QUEUE_STATUS { get; set; }
 
         public List<SelectListItem> Branches { get; set; }
 

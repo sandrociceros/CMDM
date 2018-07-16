@@ -628,6 +628,7 @@
     <Compile Include="Models\Customer\CustomerNOKModel.cs" />
     <Compile Include="Models\Customer\CustomerTCAModel.cs" />
     <Compile Include="Models\Customer\EmpInfoModel.cs" />
+    <Compile Include="Models\Customer\GuarantorModel.cs" />
     <Compile Include="Models\CustomModule\Fcmb\AccountOfficerModel.cs" />
     <Compile Include="Models\Customer\IndividualAddressDetails.cs" />
     <Compile Include="Models\Customer\IndividualBioDataModel.cs" />

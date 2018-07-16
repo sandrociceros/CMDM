@@ -16,13 +16,13 @@ namespace CMdm.Entities.Domain.Customer
     { 
         public CDMA_CUST_REL_TYPE()
         {
-            CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
+            //CdmaNextOfKins = new HashSet<CDMA_INDIVIDUAL_NEXT_OF_KIN>();
         }
 
         
         [Key]
         public int REL_CODE { get; set; }
         public string REL_DESC { get; set; }
-        public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
+        //public ICollection<CDMA_INDIVIDUAL_NEXT_OF_KIN> CdmaNextOfKins { get; private set; }
     }
 }

@@ -42,7 +42,8 @@ namespace CMdm.UI.Web.Controllers
         {
             var identity = ((CustomPrincipal)User).CustomIdentity;
 
-            string customer_no = Request["CUSTOMER_NO"].ToString();
+            string account_no = Request["ACCOUNT_NO"].ToString();
+            string customer_no = _db.CustAccount.Where(x => x.FORACID == account_no).Select(q => q.CIF_ID).SingleOrDefault();
 
             int records = _db.CDMA_INDIVIDUAL_BIO_DATA.Count(o => o.CUSTOMER_NO == customer_no);
 

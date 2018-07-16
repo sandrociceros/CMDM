@@ -148,6 +148,7 @@ namespace CMdm.UI.Web.Controllers
 
             //default value
             model.ISLOCKED = 0;
+            model.COD_PASSWORD = "password";
             return View(model);
         }
 

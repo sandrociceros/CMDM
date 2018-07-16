@@ -8,7 +8,7 @@ namespace CMdm.UI.Web.Models.Customer
 {
     public class CIUModel
     {
-        [DisplayName("Customer NO")]
-        public string CUSTOMER_NO { get; set; }
+        [DisplayName("Account No")]
+        public string ACCOUNT_NO { get; set; }
     }
 }

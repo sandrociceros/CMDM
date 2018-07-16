@@ -322,6 +322,9 @@ namespace CMdm.Data
             modelBuilder.Entity<MdmDqRunException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmDqRunExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmDqRunException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmDqRunExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<MdmCorpRunExceptions>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmCorpRunExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmCorpRunExceptions>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmCorpRunExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
+
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MDM_WEIGHTS).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.WEIGHT_ID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<MdmEntityDetails>().HasRequired(e => e.MdmCatalog).WithMany(t => t.MDM_ENTITY_DETAILS).HasForeignKey(e => e.CATALOG_ID).WillCascadeOnDelete(false);
@@ -332,42 +335,14 @@ namespace CMdm.Data
 
             modelBuilder.Entity<CM_ROLE_PERM_XREF>().HasRequired(e => e.CM_USER_ROLES).WithMany(t => t.CM_ROLE_PERM_XREF).HasForeignKey(e => e.ROLE_ID).WillCascadeOnDelete(false);
             modelBuilder.Entity<CM_ROLE_PERM_XREF>().HasRequired(e => e.CM_PERMISSIONS).WithMany(t => t.CM_ROLE_PERM_XREF).HasForeignKey(e => e.PERMISSION_ID).WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<MdmCatalog>().HasRequired(e => e.CREATED_BY).WithMany(t => t.EntityDetails).HasForeignKey(e => e.ENTITY_ID).WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.IdTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.IDENTIFICATION_TYPE).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.RelationshipTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.RELATIONSHIP).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.TitleTypes).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.TITLE).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.Countries).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.COUNTRY).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.States).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.STATE).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_INDIVIDUAL_NEXT_OF_KIN>().HasOptional(e => e.LocalGovts).WithMany(t => t.CdmaNextOfKins).HasForeignKey(e => e.LGA).WillCascadeOnDelete(false);
             modelBuilder.Entity<CDMA_FOREIGN_DETAILS>().HasOptional(e => e.Countries).WithMany(t => t.CdmaForeigner).HasForeignKey(e => e.COUNTRY).WillCascadeOnDelete(false);
             
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
             modelBuilder.Entity<MdmUnauthException>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmUnauthExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
- 
-  
-             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
- 
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
- 
- 
-             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
-             modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
- 
- 
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
- 
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Occupationtype).WithMany(t => t.OccupationList).HasForeignKey(e => e.SECTOR_CLASS).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Subsectortype).WithMany(t => t.Subsectortype).HasForeignKey(e => e.SUB_SECTOR).WillCascadeOnDelete(false);
- 
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Businessnature).WithMany(t => t.Businessnature).HasForeignKey(e => e.NATURE_OF_BUSINESS_OCCUPATION).WillCascadeOnDelete(false);
-            modelBuilder.Entity<CDMA_EMPLOYMENT_DETAILS>().HasOptional(e => e.Indsegment).WithMany(t => t.Indsegment).HasForeignKey(e => e.INDUSTRY_SEGMENT).WillCascadeOnDelete(false);
 
-            
+            modelBuilder.Entity<MdmUnauthCorpExceptions>().HasRequired(e => e.MdmDQQueStatuses).WithMany(t => t.MdmUnauthCorpExceptions).HasForeignKey(e => e.ISSUE_STATUS).WillCascadeOnDelete(false);
+            modelBuilder.Entity<MdmUnauthCorpExceptions>().HasRequired(e => e.MdmDQPriorities).WithMany(t => t.MdmUnauthCorpExceptions).HasForeignKey(e => e.ISSUE_PRIORITY).WillCascadeOnDelete(false);
+
         }
         #region Utilities
 
@@ -427,7 +402,9 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<MdmDQDsType> MdmDQDsTypes { get; set; }
         public System.Data.Entity.DbSet<MdmCatalog> MdmCatalogs { get; set; }
         public DbSet<MdmDqRunException> MdmDqRunExceptions { get; set; }
+        public DbSet<MdmCorpRunExceptions> MdmCorpRunExceptions { get; set; }
         public DbSet<MdmUnauthException> MdmUnauthExceptions { get; set; }
+        public DbSet<MdmUnauthCorpExceptions> MdmUnauthCorpExceptions { get; set; }
         public DbSet<MdmDqCatalog> MdmDqiParams { get; set; }
         public DbSet<MdmRegex> MdmRegex { get; set; }
         public DbSet<CDMA_COUNTRIES> CDMA_COUNTRIES { get; set; }
@@ -497,6 +474,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.WrongSegment> WrongSegment { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.PhoneValidation> PhoneValidation { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.DqiSummary> DqiSummary { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.CustAccount> CustAccount { get; set; }
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.CustomModule.Fcmb.ActivityLog> ActivityLog { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDIVIDUAL_NEXT_OF_KIN> CDMA_INDIVIDUAL_NEXT_OF_KIN { get; set; }
@@ -511,6 +489,7 @@ namespace CMdm.Data
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_INDUSTRY_SEGMENT> CDMA_INDUSTRY_SEGMENT { get; set; }
  
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_FOREIGN_DETAILS> CDMA_FOREIGN_DETAILS { get; set; }
+        public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_GUARANTOR> CDMA_GUARANTOR { get; set; }
 
         public System.Data.Entity.DbSet<CMdm.Entities.Domain.Customer.CDMA_TRUSTS_CLIENT_ACCOUNTS> CDMA_TRUSTS_CLIENT_ACCOUNTS { get; set; }
 

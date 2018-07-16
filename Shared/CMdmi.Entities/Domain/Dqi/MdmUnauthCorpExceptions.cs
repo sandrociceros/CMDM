@@ -8,10 +8,8 @@ using System.ComponentModel;
 
 namespace CMdm.Entities.Domain.Dqi
 {
-    
-
-    [Table("VW_UNAUTHORISED_CHANGES")] 
-    public partial class MdmUnauthException
+    [Table("VW_UNAUTHORISED_CHANGES_CORP")]
+    public partial class MdmUnauthCorpExceptions
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -55,6 +53,5 @@ namespace CMdm.Entities.Domain.Dqi
         public string SURNAME { get; set; }
         public string OTHER_NAME { get; set; }
         public int? TIER { get; set; }
-
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
-namespace CMdm.Entities.ViewModels
+namespace CMdm.Entities.Domain.Dqi
 {
-    public class CustExceptionsModel
+    [Table("MDM_DQ_CORP_RULE_RUN_EXCPTIONS")]
+    public partial class MdmCorpRunExceptions
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DisplayName("Exception Id")]
         public int EXCEPTION_ID { get; set; }
         [DisplayName("Rule Id")]
         public int RULE_ID { get; set; }
@@ -27,26 +33,19 @@ namespace CMdm.Entities.ViewModels
         public DateTime? LAST_MODIFIED_DATE { get; set; }
         public string LAST_MODIFIED_BY { get; set; }
         [DisplayName("Status")]
-        public string ISSUE_STATUS_DESC { get; set; }
-        [DisplayName("Priority")]
-        public string ISSUE_PRIORITY_DESC { get; set; }
-
-        public int PRIORITY_CODE { get; set; }
-        public int STATUS_CODE { get; set; }
-        [DisplayName("Exception reason")]
-        public string REASON { get; set; }
-        [DisplayName("Table Name")]
-        public string CATALOG_TABLE_NAME { get; set; }
-        [DisplayName("Catalog")]
-        public int CATALOG_ID { get; set; }
-        public string SURNAME { get; set; }
-        public string FIRST_NAME { get; set; }
-        public string OTHERNAME { get; set; }
-        [DisplayName("Status")]
         public int ISSUE_STATUS { get; set; }
         [DisplayName("Priority")]
         public int ISSUE_PRIORITY { get; set; }
+        public int CATALOG_ID { get; set; }
+        public int? RELATED_ENTITY_ID { get; set; }
+        public string CATALOG_TAB_COL { get; set; }
+        public virtual MdmDQPriority MdmDQPriorities { get; set; }
+        public virtual MdmDQQueStatus MdmDQQueStatuses { get; set; }
+        [DisplayName("Table Name")]
+        public string CATALOG_TABLE_NAME { get; set; }
+        [DisplayName("Exception reason")]
+        public string REASON { get; set; }
+        public string AUTH_REJECT_REASON { get; set; }
         public int? TIER { get; set; }
-
     }
 }

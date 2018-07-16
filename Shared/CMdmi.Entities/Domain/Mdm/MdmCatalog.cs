@@ -23,6 +23,7 @@ namespace CMdm.Entities.Domain.Mdm
         public string CATALOG_NAME { get; set; }
         public int CATEGORY_ID { get; set; }
         public int CREATED_BY { get; set; }
+        public int ENABLED { get; set; }
 
         public DateTime? CREATED_DATE { get; set; }
 

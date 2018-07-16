@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Data Quality Issues";
-    ViewBag.SubTitle = "List";
+    //ViewBag.SubTitle = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultGridPageSize = 20;
     var gridPageSizes = "10, 15, 20, 50, 100";
@@ -123,7 +123,7 @@
                                     field: "DQ_PROCESS_NAME",
                                     title: "Process Name",
                                     width: 250,
-                                    template: '<a href="@Url.Content("~/DQQue/BrnIssueList/")">#:DQ_PROCESS_NAME#</a>'                                   
+                                    template: '<a href="@Url.Content("~/DQQue/BrnIssueList/")#=CATALOG_ID#">#:DQ_PROCESS_NAME#</a>'                                   
                                     }, {
                                     field: "CATALOG_NAME",
                                     title: "Catalog name",
@@ -145,14 +145,14 @@
                                     attributes: { style: "text-align:center" },
 
                                 },
-                                {
-                                    field: "PCT_COMPLETION",
-                                    title: "% Resolved",
-                                    width: 80,
-                                    headerAttributes: { style: "text-align:left" },
-                                    attributes: { style: "text-align:left" },
-                                    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
-                                },
+                                //{
+                                //    field: "PCT_COMPLETION",
+                                //    title: "% Resolved",
+                                //    width: 80,
+                                //    headerAttributes: { style: "text-align:left" },
+                                //    attributes: { style: "text-align:left" },
+                                //    template: '<div class="progress"> <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: #:PCT_COMPLETION#%">  <span class="sr-only">40% Complete (success)</span>  </div>  </div>'
+                                //},
                                 {
                                     field: "DaysonQue",
                                     title: "Days",
@@ -203,3 +203,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function()
+    {
+        $('#BTN_PROCESS_NAME').click(function () {
+            @HttpContext.Current.Session["CATALOG_ID"] = id;
+        })
+    });
+
+</script>
